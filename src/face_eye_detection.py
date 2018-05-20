@@ -4,8 +4,9 @@
 import cv2
 
 # Loading the cascades haarcascade_frontalface_default.xml
-face_cascade = cv2.CascadeClassifier('/home/dev03/yazer/GitHub/My Project/face_eye_detection/haarcascade_frontalface_default.xml')
-eye_cascade = cv2.CascadeClassifier('/home/dev03/yazer/GitHub/My Project/face_eye_detection/haarcascade_eye.xml')
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
 
 # Defining the function that will do the detection
 def detect(gray, frame):
@@ -17,6 +18,9 @@ def detect(gray, frame):
         eyes = eye_cascade.detectMultiScale(roi_gray, 1.1, 5)
         for (ex, ey, ew, eh) in eyes:
             cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
+        smiles = smile_cascade.detectMultiScale(roi_gray, 1.7, 22)
+        for (sx, sy, sw, sh) in smiles:
+            cv2.rectangle(roi_color, (sx, sy), (sx+sw, sy+sh), (0,0,255), 2)
     return frame
 
 # Doing some face recognition with webcam
